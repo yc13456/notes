@@ -6,11 +6,11 @@
 Docker是一个**Client-Server结构的系统，Docker守护进程（Docker daemon）运行在主机上， 然后通过Socket连接从客户端访问，守护进程从客户端接受命令并管理运行在主机上的容器。 容器，是一个运行时环境，就是我们前面说到的集装箱。
 ```
 
-![1](images/1.png)
+![1](./images/1.png)
 
 ## 为什么Docker比较比VM快
 
-![image-20210713112143246](images/image-20210713112143246.png)
+![image-20210713112143246](./images/image-20210713112143246.png)
 
 ## docker常用命令
 
@@ -33,7 +33,7 @@ systemctl restart docker # 重启dokcer
 docker image
 ```
 
-![image-20210713112918247](images/image-20210713112918247.png)
+![image-20210713112918247](./images/image-20210713112918247.png)
 
 ### **镜像搜索**
 
@@ -182,7 +182,7 @@ docker container port CONTAINER
 
 ### 小结
 
-![2](images\2.png)
+![2](./images\2.png)
 
 ## 软件安装
 
@@ -199,7 +199,7 @@ docker container port CONTAINER
 
 端口暴露
 
-![image-20210713133946995](images\image-20210713133946995.png)
+![image-20210713133946995](./images\image-20210713133946995.png)
 
 ### docker部署tomcat
 
@@ -228,7 +228,7 @@ docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=
 docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms64m -Xms512m" elasticsearch:7.6.2s
 ```
 
-![image-20210714093603591](images/image-20210714093603591.png)
+![image-20210714093603591](./images/image-20210714093603591.png)
 
 ## 可视化
 
@@ -267,7 +267,7 @@ docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=
 	精简OS操作系统只包含指令操作命令，bootfs文件就精简了不少。（虚拟机分钟级，容器秒级）
 ```
 
-![image-20210714100210939](images/image-20210714100210939.png)							镜像加载图
+![image-20210714100210939](./images/image-20210714100210939.png)							镜像加载图
 
 ## 镜像分层理解
 
@@ -284,7 +284,7 @@ docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=
 这一层就是我们通常说的容器层,容器之下的都叫镜像层!
 ```
 
-![image-20210714101221487](images/image-20210714101221487.png)		镜像下载，容器打包过程
+![image-20210714101221487](./images/image-20210714101221487.png)		镜像下载，容器打包过程
 
 commit镜像（提交容器）
 
