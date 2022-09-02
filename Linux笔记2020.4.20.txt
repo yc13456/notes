@@ -1,0 +1,1110 @@
+恭喜您，课程创建成功！
+已为您创建好课程班群，快通过课程号邀请学生加入吧！
+
+课程号：K715610
+
+linus    ----  unix    类unix的内核      linux  开源的   源代码都可见可改  阿里云  淘宝      嵌入式系统
+
+administrator、root    su
+
+ctrl+alt 虚拟机界面和真实系统界面的切换
+
+date -s "2020-02-20 12:01:00"     设置系统时间为2020年2月20日12:01:00。
+clock -w    将上面修改的时间写入系统配置中，即从当前系统时间设置硬件时钟。
+
+ifconfig
+
+虚拟机IP:172.18.1.10 /255.255.255.0      ;    真实主机IP：172.18.1.11/255.255.255.0     2台主机通过vmnet1网卡连接起来
+TTL=64的是Linux系统，TTL=128的是windows系统
+ctrl+c 强制退出当前运行程序
+
+halt -p  、shutdown -h now 关机
+
+runlevel 查看当前系统运行级别
+
+Linux系统严格区分大小写
+
+修改/etc/inittab文件        最后增加  id:5:initdefault:
+
+su命令提权  $提示符转为#提示符
+
+alt+F1---F6 可以使用6个不同的终端进行登录
+
+startx  在字符界面开启图形界面。
+
+reboot  重新启动
+
+ssh协议、putty（SSH Secure Shell Client）远程访问工具
+
+命令行状态下，按tab键可以自动补全命令或者路径和文件名，当出现多个相同命令的时候，系统会进行提示。上下键可以翻看历史命令。
+
+Linux下安装软件：源代码安装、rpm包安装、yum安装（apt）
+rpm -qa     //列出系统已经安装的所有软件包信息
+rpm -qa | grep gcc    //列出系统已经安装的跟gcc有关的软件包信息
+rpm-ivh xxx.rpm(软件包的名称)     //安装xxx.rpm软件包
+rpm -e xxx     //卸载xxx软件
+
+yum命令安装软件，    目录  /var/cache/yum 保存更新软件清单
+yum clean cache     清理缓存的清单列表
+yum makecache     重新生成清单列表
+yum list                   列出所有软件包
+yum list installed     列出已经安装的软件包，还可以结合管道|命令和grep命令在其中搜索特定的软件包
+yum search gcc       在yum的软件源中搜索软件gcc
+yum remove gcc      卸载软件gcc
+yum -y install gcc     直接安装gcc软件，不需要yes确认
+
+挂载光盘到/mnt目录(光盘的路径/dev/cdrom),采用mount挂载命令：
+mount /dev/cdrom /mnt/cdrom
+
+设置系统重启后自动挂载光驱，修改   /etc/fstab   文件：
+/dev/cdrom                 /mnt/cdrom                iso9660             defaults                 0           0
+设备名                              挂载点                 光盘文件系统类型    默认挂载选项       不备份  不检测
+
+创建本地yum软件仓库地址
+新建并修改/etc/yum.repos.d/dvd.repo文件
+[dvd]
+name=dvd
+baseurl=file:///mnt/cdrom            #指向本地软件仓库地址
+gpgcheck=0
+enabled=1
+
+yum安装软件
+yum clean all
+yum -y install gcc      //用yum安装gcc软件（系统能连接internet网络，或者设置了本地yum连接库时）
+yum -y remove gcc        //卸载软件gcc
+
+命令 --help/--main   查看当前命令的帮助/详细信息
+
+echo输出命令 ，类似C语言中的printf函数
+
+find查找命令，搜索文件；
+
+/etc/rc.d
+/usr/src/123
+
+命令分类：
+1、外部命令   存放在/bin  、 /sbin目录等下
+2、内置命令，比如echo命令；
+3、实用程序
+4、用户使用其他语言编写的程序。 eg：C语言程序
+5、用户编写的shell脚本程序，类似windows下用DOS命令编写的.bat批处理程序。
+
+了解shell解释命令的过程
+
+shell变量
+
+环境变量中的PATH路径指定命令的运行路径
+set设置环境变量（大写）      eg： set  环境变量名  = 变量的值
+[root@localhost ~]# PATH=.:$PATH       \\在原环境变量路径中增加当前目录路径（.表示当前路径） 
+
+变量的作用域：
+局部变量：作用域针对部分
+全局变量：作用域针对全部  
+
+针对全部用户有效：
+/etc/profile    \\修改该系统文件，增加下次系统启动自动执行的语句。
+/etc/bashrc     \\针对用户使用bashrc的shell，增加shell自动执行的语句
+
+只针对当前用户有效，每个用户主目录下的2个隐藏文件：
+.bashrc（用户主目录下的隐藏文件）对于用户打开的子shell都有效。
+.bash_profile（用户主目录下的隐藏文件）只在用户登录时执行一次，对于新开的子shell无效。
+
+export命令        \\将局部变量设置为全局变量
+
+$变量名    \\引用变量的值
+$$          \\表示引用当前进程的进程号
+
+PID 系统的进程ID号（进程号）
+
+'' 单引号 和""双引号 含有转义的作用
+
+Linux系统中输入 ./ 表示当前目录，../表示父目录（上一级目录），Linux系统中隐藏文件的表示用 .  和 .. ，注意区分。 eg： ./123（.代表当前路径、..代表当前路径的父目录）；
+
+alias 定义别名
+
+正则表达式  grep 中  . 表示单个字符（注意与?区分），模式匹配时使用
+
+输出重定向(标准的输出设备是显示器，默认是到屏幕，重定向可以输出到文件)：
+> 覆盖
+>>追加重定向   (修改默认输出（默认是到屏幕），这里输出到文件)
+2>    输出出错信息
+
+ \ 反斜杠-转义字符：表示shell不用解释。eg：    \.代表的是普通的 . 点
+
+管道    |      把上一条命令的输出结果，给下一条命令作为输入。
+eg： rpm -qa | grep gcc    \\列出系统已经安装的gcc有关的软件
+
+wc 命令，统计文件信息
+=============================================
+Vi和Vim的区别为：搜索不同、脚本语言不同、共享不同。Vim是从vi发展出来的一个文本编辑器。代码补全、编译及错误跳转等方便编程的功能丰富，在程序员中被广泛使用，和Emacs并列成为类Unix系统用户最喜欢的文本编辑器。
+一、搜索不同
+1、Vi：Vi不支持正则表达式的搜索。
+2、Vim：Vim支持正则表达式的搜索。
+二、脚本语言不同
+1、Vi：Vi没有自己的脚本语言，只是在Unix及Linux系统下进行编辑的工具。
+2、Vim：Vim有自己的脚本语言，称为Vim脚本（也称为vimscript或VimL），用户可以通过多种方式使用它来增强Vim。
+三、共享不同
+1、Vi：Vi不具有高度可配置性，无法和各个Vi安装之间共享文件。
+2、Vim：Vim具有高度可配置性，包含Vim核心全局设置（称为vimrc）的文件可以在各个Vim安装之间共享。
+=============================================
+脚本程序
+vi xxxx.sh     \\编写一个xxxx.sh的脚本程序（类似windows下用DOS命令编写的.bat批处理文件）
+#!/bin/bash
+while
+do 
+   a=1
+done    \\举例一个while的死循环
+.......
+
+sh xxx.sh   或者  bash xxx.sh       \\运行一个未添加x可执行权限的xxx.sh脚本程序。如果已经添加了x权限，直接运行xxx.sh脚本程序即可（./xxx.sh）。
+
+===========================================
+linux下编写C程序，和使用gcc编译C语言程序。
+[root@localhost ~]# vi hello.c
+#include <stdio.h>
+int main(void)
+{
+     printf("hello,this my frist C progam!\n");
+     return 0;
+}
+[root@localhost ~]# gcc hello.c
+[root@localhost ~]# gcc -o abc1 hello.c     \\使用-o选项自定义输出名称abc1
+[root@localhost ~]# ./a.out         \\执行当前目录下的a.out程序
+
+=========================================
+Linux系统下shell脚本编程，不需要编译，可以直接运行。
+从上向下，从左至右，命令间至少一个空格，可以多个空格（多余空格和空白行会被自动忽略）；
+每次遇到一个回车符会执行前面的语句，解释型语言；
+脚本中可以使用反斜杠 \ 强行换行，运行时认为强制换行的下一行是同一行；
+脚本中第一行的#不是注释，其他行#是注释；
+=======================
+[root@localhost etc]#mkdir scripts ; cd scripts     \\ 使用分号;命令建立队列，执行;前的命令后再执行后面的命令
+-------------------------------------------
+简单的脚本程序例子：
+[root@localhost scripts]# more sh01.sh
+#!/bin/bash
+#注释行
+#注释行
+#PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin  
+PATH=$PATH:~/scripts
+export PATH        #设置为全局变量
+echo -e "Hello world! \a \n"       # \a表示增加一个声音 ； \n 换行
+exit 0
+================
+[root@localhost scripts]# more sh02.sh
+#!/bin/bash
+PATH=$PATH:~/scripts
+export PATH
+read -p "please input your first name:" firstname  #提示使用者输入
+read -p "please input your last name:" lastname  #提示使用者输入
+echo -e “\n Your full name is: $firstname $lastname” #结果由屏幕输出
+======================
+脚本程序中$((表达式))表示计算其中表达式的值
+---------------------------------------
+[root@localhost scripts]# more sh03.sh
+#!/bin/bash
+PATH=$PATH:~/scripts
+export PATH
+echo "You should input 2 numbers , I will cross them!"
+read -p "Please input first number:" x
+read -p "Please input second number:" y
+total=$(($x * $y))
+echo "The result of $x * $y is $total"
+=========================================
+[root@localhost scripts]# sh sh03.sh          \\或者使用bash sh03.sh
+[root@localhost scripts]# chmod +x sh03.sh        \\增加脚本程序文件sh03.sh所有用户的可执行权限
+[root@localhost scripts]# ./sh03.sh
+==========================================
+了解脚本运行方式的差异
+脚本运行方式与作用域（运行方式会影响变量的作用域）
+1、利用绝对路径、相对路径、文件名、bash、sh等方式直接运行脚本，作用域是打开的新子shell。
+2、利用source和 . 运行脚本时：在父程序中运行。作用域是当前shell，相当于在当前的shell中运行。
+---------------------------------------------
+ps命令，查看当前进程的运行状态。
+echo $$              \\输出当前shell的进程PID号
+--------------------------------------
+[root@localhost scripts]# more sh04.sh
+#!/bin/bash
+echo "当前进程的进程号是$$"            #第一个$是引用变量值，第二个$是变量名（变量$中存放的是当前进程的编号，即PID号）
+-------------------------------------------------------
+[root@localhost ~]# echo a=1 >> ~/.bashrc             //在当前作用域下定义一个变量a，并赋值为1，将它追加到用户目录的.bashrc文件末尾。
+
+[root@localhost ~]# more .bashrc
+# .bashrc
+# User specific aliases and functions
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+a=1                #自定义变量a，赋值1
+
+[root@localhost ~]# sh ~/.bashrc                           \\作用域是新打开的子shell
+[root@localhost ~]# echo $a                                   \\输出变量a的值为空（没有定义）
+
+[root@localhost ~]# source ~/.bashrc                     \\ 作用域是当前定义变量a的shell
+[root@localhost ~]# echo $a                                    \\输出的变量值为我们定义的1
+1
+=======================================
+判断命令test
+测试语句往往与if 、case 、while搭配使用，一般用于文件测试、字符串测试和数值测试等；
+-------------------------
+[root@localhost scripts]# more sh05.sh
+#!/bin/bash
+#2020/3/16     
+echo "本程序会输出你提供的文件名对应文件的类型和权限。"
+read -p "请出入一个文件名： " filename
+test -z $filename && echo "你必须输入一个文件名。" && exit 0
+test ! -e $filename && echo "文件不存在。" && exit 0
+test -f $filename && filetype = "普通文件"
+test -d $filename && filetype = "目录文件"
+test -r $filename && perm = "可读"
+test -w $filename && perm = "$perm 可写"
+test -x $filename && perm = "$perm 可执行"
+echo "文件$filename是一个$filetype。"
+echo "当前用户对此文件的权限是：$perm。"
+[root@localhost scripts]#
+------------------------------------------------
+Linux read命令用于从标准输入读取数值。
+
+read 内部命令被用来从标准输入读取单行数据。这个命令可以用来读取键盘输入，当使用重定向的时候，可以读取文件中的一行数据。
+
+语法
+read [-ers] [-a aname] [-d delim] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name ...]
+参数说明:
+
+-a 后跟一个变量，该变量会被认为是个数组，然后给其赋值，默认是以空格为分割符。
+-d 后面跟一个标志符，其实只有其后的第一个字符有用，作为结束的标志。
+-p 后面跟提示信息，即在输入前打印提示信息。
+-e 在输入的时候可以使用命令补全功能。
+-n 后跟一个数字，定义输入文本的长度，很实用。
+-r 屏蔽\，如果没有该选项，则\作为一个转义字符，有的话 \就是个正常的字符了。
+-s 安静模式，在输入字符时不再屏幕上显示，例如login时输入密码。
+-t 后面跟秒数，定义输入字符的等待时间。
+-u 后面跟fd，从文件描述符中读入，该文件描述符可以是exec新开启的。
+
+read命令接收标准输入（键盘）的输入，或其他文件描述符的输入。得到输入后，read命令将数据放入一个标准变量中。read后面的变量只有name一个，也可以有多个，这时如果输入多个数据，则第一个数据给第一个变量，第二个数据给第二个变量，如果输入数 据个数过多，则最后所有的值都给第一个变量。如果太少输入不会结束。在read命令行中也可以不指定变量.如果不指定变量，那么read命令会将接收到的数据放置在环境变量REPLY中。环境变量REPLY中包含输入的所有数据，可以像使用其他变量一样在shell脚本中使用环境变量REPLY。
+----------------------------------------------
+判断命令test
+z判断字符串是否是为空，e判断文件是否存在，f判断是否是普通文件，d判断是否是目录，r、w、x是判断是否拥有相应的权限，最后进行输出。
+脚本程序sh05.sh中 filename变量的值即用户提供的文件名
+------------------------------------------------
+test语句执行完之后，会有一个对应的退出状态，然后根据这个退出状态，我们再来决定后面是否要执行相应语句，后面除了用&&，有时候还会用||，当这个测试条件不成立，返回状态通常是1，这时我们会执行||后面的语句。当这个测试条件成立时返回状态通常是0，这时我们会执行&&后面的语句。
+----------------------------------------------
+test语句中当这个测试条件不成立，返回状态通常是1，会执行两个竖杠  ||  后面的语句；当这个条件成立时返回状态通常是0，会执行两个 && 后面的语句。
+============================
+[]方括号中变量要用双引号，常量用双引号或单引号。
+---------------------------------------------
+[root@localhost scripts]# more sh06.sh
+#!/bin/bash
+#2020/3/17
+
+read -p "请回答(y/n):" answer
+[ "$answer" == "y" -o "$answer" == "Y" ] && echo "是" && exit 0
+[ "$answer" == "n" -o "$answer" == "N" ] && echo "否" && exit 0
+echo "不知道" && exit 0
+-----------------------------------------------
+使用方括号做测试时，要求方括号的内侧要有空格，中间的操作对象以及操作符必须也都用空格隔开。
+----------------------------------------------------
+[ ]判断语句中可以使用“-o”连接两个条件进行“或”运算，也可以使用“-a”进行“与”运算。
+================================
+位置变量
+脚本script针对参数已经设置好了一些变量名称。对应如下：
+/path/to/scriptname   opt1   opt2   opt3   opt4   .....
+              $0                   $1       $2      $3       $4     ...
+------------------------------------------
+[root@localhost scripts]# more sh07.sh
+#!/bin/bash
+#2020/3/17
+
+echo "本脚本程序的名字是：$0"
+echo "你执行本脚本时提供的参数个数是：$#"
+[ "$#" -lt 2 ] && echo "你提供的参数少于两个，程序停止执行。" && exit 0
+echo "第一个参数是：$1"
+echo "第二个参数是：$2"
+
+---------------------------------------------
+gt:大于
+eq:相等
+ne:不相等
+le:小于等于
+ge:大于等于
+----------------------------------------------
+$0表示其所在脚本的文件名。$1表示运行该脚本时提供的第一个参数。
+=================================
+参数的位移
+----------------------
+[root@localhost scripts]# more sh08.sh
+#!/bin/bash
+#2020/3/17
+
+echo "参数个数是：$#"
+echo "所有参数：$@"
+shift                                      #使用shift实现位移1个参数
+echo "参数个数是：$#"
+echo "所有参数：$@"
+shift 3                                    #使用shift实现位移3个参数
+echo "参数个数是：$#"
+echo "所有参数：$@"
+
+-------------------------------
+可以使用shift实现位移
+===================================
+程序的控制结构语句用于决定shell脚本中语句的执行顺序
+脚本的控制结构语句有三种基本类型：两路分支、多路分支以及一个或者多个命令的循环执行。
+Linux中的bash中的两路分支语句是if语句，多路分支语句是if和case语句；代码的循环执行语句是for、while和until语句。
+---------------------
+条件判断if语句
+1、单层、简单条件判断式
+如果你只有一个判断式要进行，那么我们可以简单的这样做：
+if  [ 条件判断式 ]; then
+         当条件判断式成立时，可以进行的命令工作内容；
+fi                 \\<==将if反过来写，就成为fi，表示结束if的意思。
+                                .  && 代表 AND  与;  
+                                .  ||  代表  or   或。
+-------------------------------------
+将sh06.sh脚本用  if....then....fi  改写如下：
+[root@localhost scripts]# more sh06-2.sh
+#!/bin/bash
+#2020/3/17
+
+read -p "请回答(y/n):" answer
+if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+                echo "是"  exit 0
+fi
+if [ "$answer" == "n" ] || [ "$answer" == "N" ]; then
+                 echo "否"  
+                 exit 0
+fi
+echo "不知道" && exit 0
+
+---------------------------------------
+将sh06.sh脚本用  if....then....elif....then....else....fi  改写如下：
+[root@localhost scripts]# more sh06-3.sh
+#!/bin/bash
+#2020/3/17
+
+read -p "请回答(y/n):" answer
+if [ "$answer" == "y" ] || [ "$answer" == "Y" ]; then
+                echo "是"
+elif [ "$answer" == "n" ] || [ "$answer" == "N" ]; then
+                echo "否"
+else
+                echo "不知道"
+fi
+
+==========================================
+[root@localhost scripts]# more sh09.sh
+#!/bin/bash
+#2020/3/17
+
+if [ "$1" == "start" ]; then
+               echo "服务启动中......"
+elif [ "$1" == "" ]; then
+               echo "你必须提供参数，格式：{$0 参数}"
+else
+               echo "允许的参数是start, 格式：{$0 start}"
+fi
+
+-----------------------------------------------------------
+脚本程序运行的时候通常是可以接受start参数，stop参数restart参数等来控制管理这个服务。
+=========================================
+[root@localhost scripts]# netstat -tuln        \\利用netstat命令查看当前网络连接状态
+Active Internet connections (only servers)
+Proto Recv-Q   Send-Q    Local Address           Foreign Address         State
+tcp            0           0        127.0.0.1:631                  0.0.0.0:*               LISTEN
+tcp            0           0        127.0.0.1:25                    0.0.0.0:*               LISTEN
+tcp            0           0         0.0.0.0:111                     0.0.0.0:*               LISTEN
+tcp            0           0         192.168.122.1:53           0.0.0.0:*               LISTEN
+tcp            0           0          0.0.0.0:22                      0.0.0.0:*               LISTEN
+封包格式  接收数据 发送数据  本地IP:端口                 远程IP:端口          是否监听
+
+-------------------------------------------------
+[root@localhost scripts]# more sh10.sh
+#!/bin/bash
+#2020/3/17
+
+echo "本程序会检测你的Linux系统已开启的服务信息，包括ssh服务、www服务。"
+testing=$(netstat -tuln | grep '.*:22 .*')
+if [ "$testing" != "" ]; then
+               echo "你的系统正在运行ssh服务。"
+fi
+testing=$(netstat -tuln | grep '.*:80 .*')
+if [ "$testing" != "" ]; then
+                echo "你的系统正在运行www服务。"
+fi
+
+--------------------------------------------------------
+[root@localhost scripts]# more sh11.sh
+#!/bin/bash
+#2020/3/17
+
+echo "这个程序会显示你还有多久毕业。"
+read -p "请输入你入学的时间（例如20190901）：" indate
+date1=$(echo $indate | grep '[0-9]\{8\}')
+if [ "date1" == "" ]; then
+                   echo "你输入的日期不符合要求。"
+                   exit 1
+fi
+    indate_s=`date --date="$indate"+%s`
+    outdate_s=$(($indate_s+365*4*24*60*60))
+    nowdate_s=`date +%s`
+    result=$((($outdate_s-$nowdate_s)/60/60/24))
+if [ "$result" -lt "0" ]; then
+             echo "你在$((-1*$result))天前已经毕业了。"
+else
+             echo "你还有$result天毕业。"
+fi
+
+===========================================
+case语句的语法格式为：
+
+case 表达式 in
+	值1)
+		第1种取值时执行语句
+		;;
+	值2)
+		第2种取值时执行语句
+		;;
+	值3)
+		第3种取值时执行语句
+		;;
+                 ........
+	*)
+		前面取值都不匹配时执行语句
+		;;
+esac
+--------------------------------------
+利用case语句将sh09.sh脚本程序进行修改
+[root@localhost scripts]# more sh09-2.sh
+#!/bin/bash
+#2020/3/19
+
+case $1 in
+    "start")
+                     echo "服务启动中......"
+                     ;;
+       "")
+                      echo "你必须提供参数，格式：{$0 参数}"
+                      ;;
+         *)
+                       echo "允许的参数是start, 格式：{$0 start}"
+                       ;;
+esac
+--------------------------------------------------------------
+[root@localhost scripts]# more sh12.sh
+#!/bin/bash
+#2020/3/19
+
+echo "这个程序将根据你输入的参数执行不同的操作。"
+#read -p "请输入你要执行的功能：" choice
+#case $choice in
+case $1 in
+              "start")
+                             echo "服务启动中。。。"
+                             ;;
+               "restart")
+                             echo "服务重启中。。。"
+                             ;;
+                 "stop")
+                             echo "服务停止中。。。"
+                             ;;
+                  *)
+                             echo "使用方法：$0{start|restart|stop}"
+                             ;;
+esac
+
+----------------------------------
+[root@localhost scripts]# more sh12-1.sh
+#!/bin/bash
+#2020/3/19
+
+echo "这个程序将根据你输入的参数执行不同的操作。"
+read -p "请输入你要执行的功能：" choice
+case $choice in
+#case $1 in
+              "start")
+                             echo "服务启动中。。。"
+                             ;;
+               "restart")
+                             echo "服务重启中。。。"
+                             ;;
+                 "stop")
+                             echo "服务停止中。。。"
+                             ;;
+                  *)
+                             echo "使用方法：$0{start|restart|stop}"
+                             ;;
+esac
+
+---------------------------------
+函数
+shell是解释性语言，它是由上往下一条一条解释执行的，必须先定义函数，然后后面才能调用这个函数，如果是在后面定义的函数，程序运行时会报错。
+函数定义后，在文件调用此函数时，直接利用函数名，不必带括号，就像一般命令那样使用。
+----------------------
+[root@localhost scripts]# more sh12-2.sh
+#!/bin/bash
+#2020/3/19
+
+function pri(){
+             echo -n "服务正在"
+}
+
+echo "这个程序将根据你输入的参数执行不同的操作。"
+#read -p "请输入你要执行的功能：" choice
+#case $choice in
+case $1 in
+              "start")
+                             pri;echo "启动中。。。"               #执行函数pri完毕后，执行后面echo
+                             ;;
+               "restart")
+                              pri;echo "重启中。。。"
+                             ;;
+                 "stop")
+                              pri;echo "停止中。。。"
+                             ;;
+                  *)
+                             echo "使用方法：$0{start|restart|stop}"
+                             ;;
+esac
+
+-----------------------------------
+shell脚本与函数间的参数传递可利用位置参数和变量直接传递。变量的值可以由shell脚本传递给被调用的函数，而函数中所用的位置参数$1、$2等对应于函数调用语句的实参，这一点是与普通命令不同的。
+---------------------
+[root@localhost scripts]# more sh12-3.sh
+#!/bin/bash
+#2020/3/19
+
+function pri(){
+             echo  "服务正在$1"
+}
+
+echo "这个程序将根据你输入的参数执行不同的操作。"
+#read -p "请输入你要执行的功能：" choice
+#case $choice in
+case $1 in
+              "start")
+                             pri "启动中。。。"               
+                             ;;
+               "restart")
+                              pri "重启中。。。"
+                             ;;
+                 "stop")
+                              pri "停止中。。。"
+                             ;;
+                  *)
+                             echo "使用方法：$0{start|restart|stop}"
+                             ;;
+esac
+
+------------------
+脚本中定义的函数内的位置参数是调用函数时提供的参数，和脚本执行时提供的位置参数是不一样的。
+---------------------------
+在程序中部分代码需要多次启用，我们可以使用函数简化我们的程序。
+============================================
+shell中有3种用于循环的语句：while语句、until语句、for语句。
+------------------------------
+while语句的一般格式：
+while 测试条件
+do
+      命令表
+done
+-------------------------------
+until语句的一般格式：
+until
+      测试条件
+do
+      命令表
+done
+--------------------------------
+shell中也支持Break和continue语句，Break和continue命令用于中断循环体的顺序执行。
+Break命令将控制转移到done后面的命令，因此循环提前结束。continue命令将控制转移到done，接着再次计算条件的值，以决定是否继续循环。
+----------------------------------
+[root@localhost scripts]# more sh13.sh
+#!/bin/bash
+#2020/3/19
+
+while [ "$answer" != "yes" -a "$answer" != "YES" ]
+do
+                 read -p "输入yes或者YES停止程序：" answer
+done
+echo "你的输入是正确的。"
+
+---------------------
+[root@localhost scripts]# more sh13-2.sh
+#!/bin/bash
+#2020/3/19
+
+until [ "$answer" == "yes" -o "$answer" == "YES" ]
+do
+                 read -p "输入yes或者YES停止程序：" answer
+done
+echo "你的输入是正确的。"
+
+---------------------------------
+while后面这个条件必须成立才进行循环，一旦后面条件不成立，结束循环；而until则是后面的条件必须不成立才进行循环，一旦成立就结束循环。
+--------------------------------------------
+计算1+2+3+......+100的值。
+[root@localhost scripts]# more sh14.sh
+#!/bin/bash
+#2020/3/19
+
+s=0
+i=0
+while [ "$i" != "100" ]
+do
+               i=$(($i+1))
+               s=$(($s+$i))
+done
+echo "1到100的所有数字的和是：$s"
+
+==================================
+for循环
+while循环和until循环一般用于循环条件是某个状态的情况。
+for循环通常适用于确定循环次数的情况。
+---------------------------------------------
+for循环语句语法：
+1、foreach型循环
+for variable in list
+do
+       commands
+done
+先将列表list的第1个值赋给变量variable后执行循环体commands；再将列表list的第2个值赋给变量variable后执行循环体commands；如此循环，直到list中的所有列表元素值都已用完后终止循环。
+（1）循环执行的次数取决于列表list中元素的个数；
+（2）此结构中的in list可省略，省略时相当于 in "$@"
+-------------
+2、C语言型循环
+for (( expr1;expr2;expr3 ))
+do
+       commands
+done
+首先仅执行一次 expr1。执行 expr2，其值为假时，终止循环；其值为真时执行循环体commands，执行一次expr3，进入下一次循环。次结构用于计数型循环时最方便。
+-------------------------------------------------
+[root@localhost scripts]# more sh15.sh
+#!/bin/bash
+for stud in 张三 李四 王五 赵六
+do
+               echo "学生：$stud"
+done
+--------------------------------------------------
+[root@localhost scripts]# more sh16.sh
+#!/bin/bash
+#2020/3/19
+
+users=$(cut -d ':' -f1 /etc/passwd)
+for username in $users
+do
+             id $username | grep '.*id=1...(.*'
+done
+[root@localhost scripts]# sh sh16.sh
+
+-----------------------------------------------------
+利用ping命令进行网络状态检测，判断每个ip是否能ping通。
+[root@localhost scripts]# more sh17.sh
+#!/bin/bash
+#2020/3/19
+
+network="192.168.1"              #先定义一个网络号（网络ID）
+for host in $(seq 100 130)
+do
+         ping -c 1 -w 1 $network.$host > /dev/null && result=0 || result=1
+         if [ "$result" == "0" ]; then
+                      echo "$network.$host 可以ping通。"
+          else
+                      echo "$network.$host ping不通。"
+           fi
+done
+
+-----------------------------------------------------------------
+脚本程序实现功能为：用户输入某个目录名后，程序输出该目录内文件的权限。
+[root@localhost scripts]# more sh18.sh
+#!/bin/bash
+#2020/3/19
+
+echo "本程序会输出你提供的目录中文件的权限。"
+read -p "请输入一个目录名：" dirname
+if [ "$dirname" == "" -o ! -d "$dirname" ]; then
+               echo "输入有误，$dirname目录不存在。"
+               exit 1
+fi
+filelist=$(ls $dirname)            #$(表达式)和重音符号`表达式`功能相同，输出表达式的值
+for filename in $filelist
+do
+                    perm=""
+                    test -r "$dirname/$filename" && perm="可读"
+                    test -w "$dirname/$filename" && perm="$perm 可写"
+                    test -x "$dirname/$filename" && perm="$perm 可执行"
+                    echo "当前用户对$dirname/$filename文件拥有的权限是：$perm。"
+done
+
+------------------------------------------------------------
+[root@localhost scripts]# more sh19.sh
+#!/bin/bash
+#2020/3/19
+
+read -p "请输入一个数字，程序将计算从1到这个数字间所有数字的和：" num
+s=0
+for ((i=1;i<=$num;i=i+1))
+do
+            s=$(($s+$i))
+done
+echo "1到$num的所有数字的和是：$s"
+
+==================================================
+对shell script进行追踪与调试
+可以直接以bash的相关参数来判断脚本程序是否有错。
+[root@localhost scripts]#sh [-nvx] scripts.sh
+选项与参数：
+-n ：不要执行script，仅查询语法的问题。
+-v ：在执行script前，先将script的内容输出到屏幕上。
+-x ：将使用到的script内容显示到屏幕上，这是很有用的参数。
+=================================================
+成批添加50个用户，使用foreach语言风格的for语句。useradd xxx   、   userdel -rf xxx  
+[root@localhost scripts]# more addname1.sh
+#!/bin/bash
+#2020/3/19
+for x in 0{1..9} {10..50};               #0{1..9} {10..50}表示01 02 03.......49 50第一组序列
+do
+        useradd user${x}
+        echo "8888888"|passwd --stdin user${x}               #读取口令88888888到user${x}
+        chage -d 0 user${x}              #使用户下次登录之后修改口令
+done
+--------------------------
+成批添加50个用户，使用C语言风格的for语句。
+[root@localhost scripts]# more addname2.sh
+#!/bin/bash
+#2020/3/19
+for (( num=1; num<=50; num++ )); 
+do
+        if ((num<10)); then st="st0$num"; else st="st$num" ;
+        fi
+        useradd $st
+        echo "8888888"|passwd --stdin $st
+        chage -d 0 $st
+done
+==============================================
+Linux文件系统和磁盘管理
+-----------------
+centOS支持的文件系统：
+ext3、ext4文件系统
+fat（适用于各种版本的dos）
+ntfs（适用于windows NT -- windows 2000）
+vfat和fat32（适用于windows 9x）
+hfs（适用于macOS苹果操作系统）
+hpfs（适用于OS/2）
+
+利用“ls /lib/modules/3.10.0-1062.el7.x86_64/kernel/fs/”可以查看Linux系统所支持的文件系统。
+
+[root@localhost scripts]# ls /lib/modules/3.10.0-1062.el7.x86_64/kernel/fs/
+binfmt_misc.ko.xz  cifs    ext4     gfs2   mbcache.ko.xz  nls        udf
+btrfs              cramfs  fat      isofs  nfs            overlayfs  xfs
+cachefiles         dlm     fscache  jbd2   nfs_common     pstore
+ceph               exofs   fuse     lockd  nfsd           squashfs
+---------------------------------------------
+Linux的文件类型：
+普通文件 -（文本文件、二进制文件、数据文件）
+目录文件 d 
+设备文件 （块设备(高速) b 、字符设备(低速) c ）
+链接文件 l
+-----------------------------------------------
+-rwxr--r--. 1 root root  89 3月  12 23:37 sh01.sh
+权限标识        属主 属组  大小、创建日期、文件名等信息
+----------------------------------------------
+三组九位字母表示法
+三位八进制表示法
+----------------------------------------------
+-   rwx   r-x    rw-        r读4   w写2   x执行1   -无0
+       u      g       o
+  属主  同组用户 其他用户     +增加权限     -去掉权限   =使用权限并覆盖原权限
+       7      5        6
+----------------------------------------------
+chmod命令修改文件权限
+chmod  u+x,g+w,o-r  test      \\为test文件的属主增加x可执行权限，同组用户增加w可写权限，其他用户去掉r只读权限
+chmod  +x  test             \\为test文件的属主、同组用户、其他用户都增加x可执行权限
+chmod  744  test            \\将test文件的属主设置rwx(读写执行)权限，同组用户设置r--只读权限，其他用户设置r--只读权限
+------------------------------------------------------
+chown命令修改文件所属主、属组 
+chown  xww  test       \\将test文件的属主改为xww用户
+chown  xww.xww  test      \\将test文件的属主改为xww用户，属组改为xww组
+chown  -R  xww:xww test   \\将test及其下的所有目录和文件的属主改为xww用户，属组改为xww组。参数-R有递归作用
+-----------------------------------------------------
+Linux下磁盘分区使用fdisk
+Linux系统下scsi/ide硬盘的命名：第1块硬盘 sda/hda  、第2块硬盘 sdb/hdb 、第3块硬盘 sdc/hdc .....
+Linux下scsi/ide硬盘中的分区命名：第1块硬盘sda/hda下的第1个分区 sda1/hda1、第2个分区 sda2/hda2、第3个分区 sda3/hda3....；第2块硬盘sdb/hdb下的第1个分区 sdb1/hdb1、第2个分区sdb2/hdb2......
+这些设备都是以文件的形式保存在 /dev目录下。
+-----------------------------------------------------
+注意磁盘分区的方式
+主分区  最多4个
+主分区最多4个（16×4＝64KB），扩展分区下可建立多个逻辑分区供使用。
+如果主分区表空间都用完了，就不能再建分区了，所以要删掉4个已建的主分区中的1个，用来创建逻辑分区。
+主分区表大小为64KB，新建1个主分区占用16KB，所以最多4个主分区。
+扩展分区 （不能直接使用） 需要再划分==》逻辑分区（逻辑分区可以划分多个）
+---------------------------------------------------
+系统可以使用的分区是主分区和逻辑分区。
+--------------------------------------------------
+mount    挂载命令
+eg:  mount  /dev/sda1  /mnt/mysda1 
+umount   卸载命令
+eg:  umount  /dev/sda1
+-------------------------------------------------
+总结一下顺序：安装新硬盘--->fdisk分区--->mkfs格式化--->mount挂载到目录使用
+--------------------------------------------------
+开机自动挂载要修改/etc/fstab文件
+设置系统重启后自动挂载光驱，修改   /etc/fstab   文件：
+/dev/cdrom                 /mnt/cdrom                iso9660             defaults                 0           0
+设备名                              挂载点                 光盘文件系统类型    默认挂载选项       不备份  不检测
+/dev/sdb1                   /sdb1                            ext4                  defaults                 0           0
+--------------------------------------------------
+fsck命令检查和修复磁盘（注意使用fsck时先要用umount卸载挂载点）
+[root@localhost ~]# umount /dev/sdb1               \\卸载sdb1磁盘分区的挂载
+[root@localhost ~]# fsck -a /dev/sdb1                  \\检查sdb1磁盘分区的文件系统是否正常，并自动修复。
+--------------------------------------------------------
+df -h 命令 和 mount 命令 都可以查看硬盘是否挂载成功
+-------------------------------------------------------
+使用fdisk命令分区/dev/sdb硬盘：
+d删除一个分区
+l列出所支持的分区类型
+m列出帮助信息
+n添加一个新分区
+p列出硬盘分区表
+q不保存修改后退出
+t改变分区类型
+w把修改写入硬盘分区表后退出
+[root@localhost ~]# fdisk /dev/sdb
+...
+命令(输入 m 获取帮助)：n             \\创建新分区
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p                       \\创建primary主分区
+分区号 (1-4，默认 1)：1                \\新建磁盘主分区1
+起始 扇区 (2048-20971519，默认为 2048)：             \\直接回车，即使用默认值
+将使用默认值 2048
+Last 扇区, +扇区 or +size{K,M,G} (2048-20971519，默认为 20971519)：+2G        \\设置主分区1的大小为2G
+分区 1 已设置为 Linux 类型，大小设为 2 GiB
+
+命令(输入 m 获取帮助)：p        \\查看硬盘分区表信息
+命令(输入 m 获取帮助)：w        \\把修改写入硬盘分区表后退出
+-------------------------------------------------------------------
+[root@localhost ~]# mkfs -t ext4 /dev/sdb1         \\格式化sdb1分区为ext4格式
+[root@localhost ~]# mount /dev/sdb1 /mnt/user         \\将分区sdb1挂载到目录/mnt/user下
+[root@localhost ~]# fdisk -l /dev/sdb          \\列出sdb硬盘的分区表情况
+
+==============================================
+RAID独立磁盘冗余阵列：
+raid0
+raid1
+raid3    
+raid5
+raid10
+-------------------------
+[root@localhost ~]# mdadm --create --auto=yes /dev/md0 --level=5 --raid-device=4 --spare-device=1 /dev/sdb{1,2,3,5,6}
+[root@localhost sdb1]# mdadm -C /dev/md127 -ayes -l5 -n3 -x1 /dev/sd[c,d,e,f]5
+[root@localhost ~]# mdadm --create --auto=yes /dev/md127 --level=5 --raid-device=3 --spare-device=1 /dev/sd{c,d,e,f}
+---------------------------------
+mdadm可用的[options]:
+-C, --create:创建一个新的阵列
+-a, --auto{=no,yes,md,mdp,part,p}{NN}:通知mdadm是否创建设备文件，并分配一个未使用的次设备号
+-l, --level=:设定raid级别
+-n, --raid-devices=:指定阵列中可用device数目，这个数目只能由--grow修改
+-x, --spare-devices=:指定初始阵列的富余（热备盘）device数目?
+-----------------------------------
+[root@localhost sdb1]# mdadm -D /dev/md127
+[root@localhost ~]# mdadm --detail /dev/md127                \\查看raid情况
+[root@localhost ~]# mkfs -t ext4 /dev/md127          \\格式化为ext4格式
+[root@localhost ~]# mount /dev/md127 /mnt/md127     \\将raid阵列挂载到目录/mnt/md127
+[root@localhost ~]# mdadm -S /dev/md127         \\停用raid，centOS7直接停用后删除
+mdadm: stopped /dev/md127
+[root@localhost ~]# mdadm --stop /dev/md128    \\停用raid（或者-S）centOS7直接停用后删除
+mdadm: stopped /dev/md128
+[root@localhost ~]# mdadm --remove /dev/md0     \\删除raid（或者-R）共享课是先stop后remove
+======================================
+磁盘配额的应用
+Linux系统通过quota磁盘配额机制来实现对用户硬盘资源的控制。quota可以从两个方面来限制用户使用磁盘资源：1.用户可以存取的硬盘分区块数（block磁盘空间数）；2.用户所能支配的索引节点数（inodes文件数）。
+-----------------------------
+quota命令的格式如下
+      quota [-F format-name] [选项] 用户名或组名
+-F,--format=format-name     以指定格式format-name显示quota值（即不实现格式自动检测），格式名可以是vfsold、vfsv0、vfsv1、rpc、xfs等；
+-g,--group    显示用户所在组的组quota信息；
+-u,--user       等同于默认标志，即对选项后面的用户进行quota设置,eg: quota -u xww
+-f，--filesystem-list    仅报告命令行所指定的文件系统的quota值。
+--------------------------------------------------------------------------
+注意：该机制是以用户和分区的文件系统为基础的。如果用户在一个以上的文件系统上创建文件，那么必须在每个文件系统上分别设置quota。
+-----------------------------
+使用磁盘配额功能可以分为下面几步：
+1、启用分区的quota功能
+2、创建quota的数据库文件aquota.user 和 aquota.group ，eg： quotacheck -avug
+3、启用磁盘配额功能quotaon， eg：quotaon -avug
+4、设置用户的quota。   eg: edquota -u xww
+-----------------------
+启用磁盘配额的步骤：
+
+1.修改/etc/fstab文件，在挂载设备中加入磁盘配额选项
+eg:         /dev/sdb1      /mnt/sdb1      ext4          defaults                                       1    1             
+修改为    /dev/sdb1      /mnt/sdb1      ext4          defaults,usrquot,grpquota          1    1             \\设置分区sdb1的quota
+
+2.重启系统或重新挂载文件系统   可以使用reboot 重启
+
+3.运行quotacheck -avug 命令生成磁盘配额文件 aquota.user 和 aquota.group
+
+4. 使用quotaon -avug命令启用磁盘配额功能  
+
+5. 设置用户的磁盘配额，或设置组的磁盘配额（设置的值是用来限制组中所有用户使用磁盘空间的总和）
+[root@localhost ~]# edquota -u xww     \\设置用户xww的配额
+[root@localhost ~]# repquota -auvs     \\查看用户磁盘配额使用情况
+------------------------------------
+扫描文件系统并生成quota的配置文件
+[root@localhost ~]# quotacheck [-avugfM] [/mount_point]
+-a :扫描所有在/etc/mtab内，含有quota支持的文件系统，加上此参数后，/mount_point可不必写，因为扫描所有的文件系统了。
+-v ：显示扫描过程的信息
+-u :针对用户扫描文件与目录的使用情况，会新建aquota.user。
+-g :针对用户组扫描文件与目录的使用情况，会新建aquota.group。
+-f :强制扫描文件系统，并写入新的quota配置文件（危险）。
+-M :强制以读写的方式扫描文件系统，只要在特殊情况下才会使用。
+
+eg：quotacheck -avug
+        quotacheck -avug -mf     #如果有特殊需求需要强制扫描已经挂载的文件系统时可以是用-mf参数
+注意：有时无法创建quota配置文件，需要关闭selinux，关闭selinux的命令是： [root@localhost ~]# setenforce 0
+---------------------
+开启磁盘配额功能quotaon,关闭磁盘配额quotaoff
+[root@localhost ~]# quotaon -avug
+设置用户的磁盘配额
+[root@localhost ~]# edquota -u xww
+查看磁盘配额使用情况
+[root@localhost ~]# repquota -auvs
+------------------------
+[xww@localhost ~]$ dd if=/dev/zero of=aaa bs=1M count=25   \\在xww用户主目录下创建一个大小为25M的aaa空白文件。
+
+/dev/zero---是一个输入设备，你可你用它来初始化文件。在类UNIX 操作系统中, /dev/zero 是一个特殊的文件，当你读它的时候，它会提供无限的空字符(NULL, ASCII NUL, 0x00)。其中的一个典型用法是用它提供的字符流来覆盖信息，另一个常见用法是产生一个特定大小的空白文件。
+
+/dev/null---在类Unix系统中/dev/null称为空设备，是一个特殊的设备文件，它丢弃一切写入其中的数据（但报告写入操作成功），读取它则会立即得到一个EOF。在程序员行话，尤其是Unix行话中，/dev/null 被称为位桶(bit bucket)或者黑洞(black hole)。空设备通常被用于丢弃不需要的输出流，或作为用于输入流的空文件。这些操作通常由重定向完成。null可以视为无底洞，你可以向它输出任何数据，它都通吃，而且不会撑着。它等价于一个只写文件，所有写入它的内容都会永远丢失.，而尝试从它那儿读取内容则什么也读不到。
+------------------------
+[root@localhost ~]# edquota -u xww
+blocks项设置磁盘空间，单位是K字节Byte（KB），比如30000是30M，后面的inodes设置文件数可以不设置。
+
+Disk quotas for user xww (uid 1000):
+  Filesystem                      blocks       soft         hard        inodes     soft     hard
+  /dev/sdb1                     50000      20000      50000          2            0        0
+1、文件系统（Filesystem）:说明该限制值是针对哪个文件系统或者哪个分区的；
+2、磁盘容量（blocks）：这个数据是quota自己算出来的，单位是KB，我们不用填；
+3、soft：磁盘容量（blocks）的soft限制值（软配额），单位KB；
+4、hard：block的hard限制值（硬配额），单位KB；
+5、文件数量（inodes）：这个quota限制的文件个数，单位为个数。这个值也是quota自己算出来的，不用动；
+6、soft：inode的soft限制数；
+7、hard：inode的hard限制值。
+=======================================
+Linux网络配置相关
+网卡配置文件存放/etc/sysconfig/network-scrpts下，ifcfg-xxx文件。
+ifconfig xxx down/up  禁用/启用网卡  或者     ifup/ifdown  xxx
+service network start/restart/stop     启动/重启/停止 网络服务
+ifconfig xxx 192.168.1.3/24   设置xxx网卡的ip地址（重启后失效）
+route add default gw 192.168.1.1   添加默认网关
+route add -net 192.168.122.0/24 gw 192.168.122.254    路由表中添加网络192.168.122.0/24的下一跳路由为192.168.122.254
+route del -net 192.168.122.0/24 gw 192.168.122.254     删除这条路由配置
+route add -host 192.168.1.98 dev ens37
+route del -host 192.168.1.98 dev ens37
+route add -host 192.168.1.98 gw 192.168.1.254
+route del -host 192.168.1.98 gw 192.168.1.254
+域名地址保存文件/etc/resolv.conf
+                            nameserver 192.168.1.1
+                            nameserver 221.7.136.68
+nmcli con show    查看网卡的UUID信息（用于添加一块新网卡，cp新网卡的配置文件时使用）
+
+====================================================
+DHCP服务器的搭建
+环境：利用本机windows系统（客户机）的VMnet1网卡和虚拟机Linux系统连接，设置虚拟机的Linux系统为固定IP，并配置成DHCP服务器，windows系统虚拟网卡为自动获取IP（因为虚拟机自动为VMnet1网卡开启了dhcp，后面还要关闭，暂时不管），启动DHCP服务成功后可以获得DHCP服务器分配的IP地址。
+[root@localhost ~]# rpm -qa|grep dhcp
+dhcp-4.2.5-77.el7.centos.x86_64      #如果没有这个包，就说明DHCP没有安装成功，需要用yum -y install dhcp安装；
+dhcp-common-4.2.5-77.el7.centos.x86_64
+dhcp-libs-4.2.5-77.el7.centos.x86_64
+[root@localhost ~]# yum clean all
+[root@localhost ~]# yum -y install dhcp
+.............
+  正在安装    : 12:dhcp-4.2.5-77.el7.centos.x86_64                                 1/1 
+  验证中      : 12:dhcp-4.2.5-77.el7.centos.x86_64                                 1/1 
+
+已安装:
+  dhcp.x86_64 12:4.2.5-77.el7.centos                                                   
+
+完毕！
+------------------------------
+[root@localhost dhcp]# pwd
+/etc/dhcp
+[root@localhost dhcp]# ls
+dhclient.d  dhclient-exit-hooks.d  dhcpd6.conf  dhcpd.conf  dhcpd.conf.example  scripts
+[root@localhost dhcp]# vim dhcpd.conf
+[root@localhost dhcp]# cat dhcpd.conf
+#
+# DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp*/dhcpd.conf.example
+#   see dhcpd.conf(5) man page
+
+# 1.整体的环境设定，全局功能的设定对全部子网都可以有效。
+ddns-update-style none; #指域名升级服务是否支持3种选择：ad-hoc 开启自动升级、interim暂时的，临时的、none不自动升级
+ignore client-updates;  #忽略客户端的DNS更新功能
+default-lease-time 259200; #定义租用时间默认值为3天
+max-lease-time 604800; #定义最大租用时间为7天，没有定义则用上面缺省值
+option routers 172.20.10.1; #设置DHPC获取的默认路由/网关
+option domain-name "yxxw.net"; #设置一个域名
+option domain-name-servers 172.20.10.1,221.7.136.68; #分配2个DNS地址，这个设定值会修改客户端的/etc/resolv.conf文件内容
+option subnet-mask 255.255.255.0;  #设置子网掩码
+# 2.关于动态分配各子网的IP
+subnet 172.20.10.0 netmask 255.255.255.0 {
+        range 172.20.10.20 172.20.10.40;
+
+# 3.关于固定IP的设置
+host msg {                                  #设置主机msg的固定IP配置
+#     hardware ethernet 00:50:56:C0:00:01;   #客户机网卡的MAC地址
+     fixed-address 172.20.10.41;  #分配固定IP给客户机
+     }
+  }
+---------------------------------------
+上面的dhcpd.conf也可以写成下面的样子：
+[root@localhost dhcp]# cat dhcpd.conf
+
+ddns-update-style none; 
+ignore client-updates;  
+default-lease-time 259200; #定义租用时间默认值为3天
+max-lease-time 604800; #定义最大租用时间为7天，没有定义则用上面缺省值
+
+subnet 172.20.10.0 netmask 255.255.255.0 {
+            option routers 172.20.10.1; 
+            option domain-name "yxxw.net"; 
+            option domain-name-servers 172.20.10.1; 
+            option subnet-mask 255.255.255.0; 
+            range 172.20.10.20 172.20.10.40;
+host msg {               
+     hardware ethernet 00:50:56:C0:00:02;   
+     fixed-address 172.20.10.41; 
+     }
+  }
+------------------------------------
+[root@localhost ~]# service dhcpd start         \\启动dhcp服务，或用systemctl start/restart/stop dhcpd.service开启/重启/停止dhcp
+Redirecting to /bin/systemctl start dhcpd.service
+[root@localhost ~]# netstat -tlunp | grep dhcp       \\查看DHCP启动情况（dhcp使用端口port67，启动结果记录在/var/log/messages文件内，可以查看该文件排查问题）
+udp        0      0 0.0.0.0:67              0.0.0.0:*                           6241/dhcpd
+[root@localhost ~]# systemctl enable dhcpd.service    \\设置开机自动启动DHCP服务用enable，或者关闭用disable。
+-----------------------------------
+测试dhcp服务器是否成功：
+1、关闭虚拟机VMnet1网卡默认开启的dhcp服务：进入虚拟机界面菜单“编辑”==》打开“虚拟网络编辑器”对话框==》选择“VMnet1  仅主机....”点击同页面右下角的“更改设置”按钮==》再次打开“虚拟网络编辑器”对话框==》再次选中“VMnet1  仅主机....”然后将同页面下的“使用本地DHCP服务将IP地址分配给虚拟机（D）”选项的√取消。确定（应用）即可。
+2、将windows系统里面的VMnet1网卡设置成自动获取IP。
+3、直接用鼠标禁用VMnet1网卡，再启用，更新ip的获取。或者cmd命令输入ipconfig /release释放IP，然后再ipconfig /renew获取IP，即更新ip信息。
+4、cmd命令输入ipconfig /all ，查看是否获取我们配置的DHCP服务器分配的IP。
+==============================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
