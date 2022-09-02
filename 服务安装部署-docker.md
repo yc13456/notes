@@ -56,7 +56,7 @@ http://ip:15672/
 
 ### 3、通信过程
 
-![img](https://images2018.cnblogs.com/blog/787798/201803/787798-20180328174112195-1114311375.png)
+![img](images/787798-20180328174112195-1114311375.png)
 
 1. P1生产消息，发送给服务器端的Exchange
 
@@ -79,7 +79,9 @@ https://segon.cn/rabbitmq-authentication-authorisation-access-control.html
 
 ## 问题
 
-![image-20220328182720372](C:/Users/yc/Pictures/typora_Images/image-20220328182720372.png)
+
+
+![image-20220328182720372](images/image-20220328182720372.png)
 
 1. 限制用户只能进行“读”操作，通过限制用户绑定的topic exchange“只读”
 2. 一个用户一个exchange，交换机名称不能重复是个问题。

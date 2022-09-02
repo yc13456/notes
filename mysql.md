@@ -10,5 +10,3 @@ select *FROM tab1 left join tab2 on tab1.id=tab2.id
 ```
 
 
-
-### 

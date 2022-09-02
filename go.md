@@ -897,7 +897,7 @@ map也是指针，实际数据在堆中，未初始化的值是nil。
 m.Handle("/debug/pprof/cmdline", http.HandlerFunc(pprof.Cmdline))
 ```
 
-![pprof 采集的信息类型](https://user-images.githubusercontent.com/7698088/68523507-3ce36500-02f5-11ea-8e8f-438c9ef2b9f8.png)
+![pprof 采集的信息类型](images/68523507-3ce36500-02f5-11ea-8e8f-438c9ef2b9f8.png)
 
 ## 额外语法
 

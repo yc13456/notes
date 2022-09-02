@@ -9,7 +9,7 @@
 5. 提交修改。
 6. 修改完成后，如果发现错误，可以撤回提交并再次修改并提交。
 
-![img](https://www.runoob.com/wp-content/uploads/2015/02/git-process.png)
+![img](images/git-process.png)
 
 ### Git 工作区、暂存区和版本库
 
@@ -19,7 +19,7 @@
 2. **暂存区：**英文叫 stage 或 index。一般存放在 **.git** 目录下的 index 文件（.git/index）中，所以我们把暂存区有时也叫作索引（index）。
 3. **版本库：**工作区有一个隐藏目录 **.git**，这个不算工作区，而是 Git 的版本库。
 
-![img](https://www.runoob.com/wp-content/uploads/2015/02/1352126739_7909.jpg)
+![img](images/1352126739_7909.jpg)
 
 Git指令
 

@@ -1,6 +1,6 @@
 ### jenkins 构造自动化部署镜像
 
-![img](https://img-blog.csdnimg.cn/20190327131025159.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpYW94aWFuZ3ppNTIw,size_16,color_FFFFFF,t_70)
+![img](images/20190327131025159.png)
 
 ### 构建命令
 

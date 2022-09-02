@@ -218,7 +218,7 @@ print(x.grad)
 
 详细内容：[卷积神经网络入门与基于Pytorch图像分类案例 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/339777736)
 
-![img](https://pic1.zhimg.com/80/v2-1fcbba41179b9060a9a9c3693eb73aa8_720w.jpg)
+![img](images/v2-1fcbba41179b9060a9a9c3693eb73aa8_720w.jpg)
 
 卷积核：
 
@@ -248,7 +248,7 @@ P =填充数
 
 输出图像尺寸计算公式：
 
-![image-20210929205340922](C:/Users/yc/Pictures/typora_Images/image-20210929205340922.png)
+![image-20210929205340922](images/image-20210929205340922.png)
 
 注：输出图像的通道数等于核数量N
 
@@ -265,7 +265,7 @@ PS=池化层尺寸
 
 输出图像尺寸的计算公式如下：
 
-![image-20210929205808639](C:/Users/yc/Pictures/typora_Images/image-20210929205808639.png)
+![image-20210929205808639](images/image-20210929205808639.png)
 
 注：池化层的输出通道数不改变。
 
